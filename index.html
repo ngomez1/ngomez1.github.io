@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lauren & Nicholas</title>
+    <meta name="description" content="Join us to celebrate the wedding of Nicholas Alexander Gomez and Lauren Nicole Mitchell on June 13, 2026">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="./assets/images/favicon.svg" type="image/x-icon">
+</head>
+<body>
+    <div class="site-container">
+        <!-- Side Navigation -->
+        <nav class="side-nav">
+            <div class="nav-header">
+                <div class="couple-initials">L & N</div>
+                <div class="wedding-date">06.13.2026</div>
+            </div>
+            <ul class="nav-links">
+                <li class="active"><a href="index.html">Home</a></li>
+                <li><a href="schedule.html">Schedule</a></li>
+                <li><a href="travel.html">Travel</a></li>
+                <li><a href="registry.html">Registry</a></li>
+                <li><a href="wedding-party.html">Wedding Party</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="rsvp.html" class="rsvp-button">RSVP</a></li>
+            </ul>
+            <div class="nav-footer">
+                <p>With love,</p>
+                <p class="couple-names">Lauren & Nicholas</p>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Home Section -->
+            <section class="home-section" id="home">
+                <div class="hero-content">
+                    <h1 class="couple-names">Lauren & Nicholas</h1>
+                    <div class="wedding-date">
+                        <span class="date-number">13</span>
+                        <span class="date-month">June</span>
+                        <span class="date-year">2026</span>
+                    </div>
+                    <p class="venue">Greenhouse Loft • Chicago, Illinois<br>2545 W Diversey Ave</p>
+                    
+                    <div class="countdown-container">
+                        <div class="countdown-header">Counting down to our special day</div>
+                        <div class="countdown" id="countdown">
+                            <div class="countdown-item">
+                                <span class="countdown-number" id="countdown-days">365</span>
+                                <span class="countdown-label">Days</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-number" id="countdown-hours">24</span>
+                                <span class="countdown-label">Hours</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-number" id="countdown-minutes">60</span>
+                                <span class="countdown-label">Minutes</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-number" id="countdown-seconds">60</span>
+                                <span class="countdown-label">Seconds</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="welcome-message">
+                    <h2>We're Getting Married!</h2>
+                    <p>We are so excited to celebrate our special day with our family and friends. Our journey together has been filled with love, laughter, and countless memories, and we can't wait to begin this new chapter of our lives with you by our side.</p>
+                    <p>Please explore our wedding website to find all the details you'll need for our celebration. We look forward to sharing this momentous occasion with you!</p>
+                    <a href="rsvp.html" class="button primary-button">RSVP Now</a>
+                </div>
+                
+                <div class="floral-divider"></div>
+                
+                <div class="photo-gallery-preview">
+                    <h2>Our Story</h2>
+                    <div class="gallery-preview-grid">
+                        <div class="gallery-preview-item">
+                            <div class="gallery-preview-image" style="background-image: url('assets/images/gallery/gallery-1.svg')"></div>
+                            <div class="gallery-preview-caption">First Date</div>
+                        </div>
+                        <div class="gallery-preview-item">
+                            <div class="gallery-preview-image" style="background-image: url('assets/images/gallery/gallery-2.svg')"></div>
+                            <div class="gallery-preview-caption">The Proposal</div>
+                        </div>
+                        <div class="gallery-preview-item">
+                            <div class="gallery-preview-image" style="background-image: url('assets/images/gallery/gallery-3.svg')"></div>
+                            <div class="gallery-preview-caption">Engagement</div>
+                        </div>
+                    </div>
+                    <a href="gallery.html" class="button secondary-button">View More Photos</a>
+                </div>
+            </section>
+        </main>
+
+        <!-- Mobile Navigation Toggle -->
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle">
+            <span class="toggle-icon"></span>
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/main.js"></script>
+    <script src="js/navigation.js"></script>
+</body>
+</html>

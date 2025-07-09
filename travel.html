@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel & Accommodations</title>
+    <meta name="description" content="Travel information and accommodations for Lauren and Nicholas's wedding">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="./assets/images/favicon.svg" type="image/x-icon">
+    <style>
+        /* Travel Page Specific Styles */
+        .travel-section {
+            padding: var(--spacing-xl) 0;
+        }
+        
+        .travel-header {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .travel-header h1 {
+            font-family: var(--font-accent);
+            font-size: 4rem;
+            color: var(--secondary-pink);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .travel-header p {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .travel-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .travel-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background-color: var(--primary-pink);
+        }
+        
+        .travel-card h2 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: var(--secondary-green);
+            margin-bottom: var(--spacing-md);
+            padding-left: var(--spacing-md);
+        }
+        
+        .travel-card-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-lg);
+        }
+        
+        .travel-card-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .travel-card-map {
+            flex: 1;
+            min-width: 300px;
+            height: 300px;
+            background-color: var(--off-white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+        
+        .travel-card-map iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .travel-info-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 var(--spacing-md);
+        }
+        
+        .travel-info-list li {
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--primary-green);
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .travel-info-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .travel-info-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: var(--spacing-sm);
+            color: var(--secondary-green);
+            flex-shrink: 0;
+        }
+        
+        .travel-info-content {
+            flex: 1;
+        }
+        
+        .travel-info-title {
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .accommodation-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .accommodation-item {
+            background-color: var(--off-white);
+            border-radius: var(--border-radius);
+            padding: var(--spacing-md);
+            box-shadow: var(--box-shadow);
+            transition: transform var(--transition-medium);
+        }
+        
+        .accommodation-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .accommodation-name {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            color: var(--secondary-pink);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .accommodation-distance {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .accommodation-description {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .accommodation-link {
+            display: inline-block;
+            margin-top: var(--spacing-sm);
+            color: var(--secondary-green);
+            font-weight: 500;
+            text-decoration: underline;
+        }
+        
+        .travel-tips {
+            background-color: var(--primary-green);
+            border-radius: var(--border-radius);
+            padding: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .travel-tips h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-md);
+            text-align: center;
+        }
+        
+        .tips-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+        }
+        
+        .tip-item {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: var(--spacing-md);
+            box-shadow: var(--box-shadow);
+        }
+        
+        .tip-title {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            color: var(--secondary-pink);
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+        }
+        
+        .tip-title svg {
+            width: 20px;
+            height: 20px;
+            margin-right: var(--spacing-sm);
+            color: var(--secondary-pink);
+        }
+        
+        .tip-content {
+            font-size: 0.95rem;
+        }
+        
+        @media (max-width: 767px) {
+            .travel-card-content {
+                flex-direction: column;
+            }
+            
+            .travel-card-map {
+                order: -1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="site-container">
+        <!-- Side Navigation -->
+        <nav class="side-nav">
+            <div class="nav-header">
+                <div class="couple-initials">L & N</div>
+                <div class="wedding-date">06.13.2026</div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="schedule.html">Schedule</a></li>
+                <li class="active"><a href="travel.html">Travel</a></li>
+                <li><a href="registry.html">Registry</a></li>
+                <li><a href="wedding-party.html">Wedding Party</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="rsvp.html" class="rsvp-button">RSVP</a></li>
+            </ul>
+            <div class="nav-footer">
+                <p>With love,</p>
+                <p class="couple-names">Lauren & Nicholas</p>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Travel Section -->
+            <section class="travel-section" id="travel">
+                <div class="travel-header">
+                    <h1>Travel & Accommodations</h1>
+                    <p>Everything you need to know about getting to our wedding and where to stay.</p>
+                </div>
+                
+                <!-- Venue Information -->
+                <div class="travel-card fade-in">
+                    <h2>Venue</h2>
+                    <div class="travel-card-content">
+                        <div class="travel-card-text">
+                            <ul class="travel-info-list">
+                                <li>
+                                    <div class="travel-info-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                    </div>
+                                    <div class="travel-info-content">
+                                        <div class="travel-info-title">Greenhouse Loft</div>
+                                        <div>2545 W Diversey Ave, Chicago, IL 60647</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="travel-info-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                                    </div>
+                                    <div class="travel-info-content">
+                                        <div class="travel-info-title">About the Venue</div>
+                                        <div>Greenhouse Loft is a beautiful venue featuring a lush sky garden, a stunning glasshouse, and an art gallery. The venue offers both indoor and outdoor spaces, ensuring our celebration will be beautiful regardless of weather. It is located on the second floor of Green Exchange, a rescued historic factory that today is a first-of-its-kind sustainable development project, a designated Chicago Landmark, and a listed property on the National Register of Historic Places.</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="travel-info-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/></svg>
+                                    </div>
+                                    <div class="travel-info-content">
+                                        <div class="travel-info-title">Parking</div>
+                                        <div>Complimentary parking is available on-site at the lot on the SE corner of N Maple Ave and W Diversey Ave. Look for signs that read "Greenhouse Loft Event Parking."</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="travel-info-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
+                                    </div>
+                                    <div class="travel-info-content">
+                                        <div class="travel-info-title">Directions</div>
+                                        <div>From O'Hare, take I-90 E for twelve miles to Exit 46A for California Ave. Turn right onto N California Ave, immediately turn left onto W Diversey Ave, and continue for 0.3 miles. Greenhouse Loft (Green Exchange) will be on your right.</div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <a href="https://www.google.com/maps/place/The+Green+Exchange,+2545+W+Diversey+Ave,+Chicago,+IL+60647/@41.93162,-87.691947,15z/data=!4m6!3m5!1s0x880fd286a8d5f34d:0x7fd270557fffc695!8m2!3d41.9316201!4d-87.6919467!16s%2Fm%2F04lj0zr?hl=en&entry=ttu&g_ep=EgoyMDI1MDYzMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="button secondary-button">Get Directions</a>
+                        </div>
+                        <div class="travel-card-map">
+                            <!-- Placeholder for Google Maps iframe -->
+                            <iframe src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=2545%20W%20Diversey%20Ave,%20Chicago,%20IL%2060647+(Greenhouse%20Loft)&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=B&amp;output=embed" allowfullscreen="" loading="lazy"></iframe>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Accommodations -->
+                <div class="travel-card fade-in">
+                    <h2>Accommodations</h2>
+                    <div class="travel-card-text">
+                        <p>We've arranged special rates at the following hotels for our wedding guests. Please mention "Gomez-Mitchell Wedding" when booking to receive the discounted rate.</p>
+                        
+                        <div class="accommodation-list">
+                            <div class="accommodation-item">
+                                <div class="accommodation-name">Rosewood Gardens Hotel</div>
+                                <div class="accommodation-distance">On-site • Wedding Venue</div>
+                                <p class="accommodation-description">The most convenient option, located on the same property as our venue. Limited rooms available, so book early.</p>
+                                <div><strong>Rate:</strong> $220/night</div>
+                                <div><strong>Phone:</strong> (503) 555-1234</div>
+                                <a href="#" class="accommodation-link" target="_blank">Book Online</a>
+                            </div>
+                            
+                            <div class="accommodation-item">
+                                <div class="accommodation-name">Portland Grand Hotel</div>
+                                <div class="accommodation-distance">0.5 miles from venue • 10 min walk</div>
+                                <p class="accommodation-description">A luxury hotel with spacious rooms, a spa, and an excellent restaurant. Shuttle service to the venue will be provided.</p>
+                                <div><strong>Rate:</strong> $180/night</div>
+                                <div><strong>Phone:</strong> (503) 555-5678</div>
+                                <a href="#" class="accommodation-link" target="_blank">Book Online</a>
+                            </div>
+                            
+                            <div class="accommodation-item">
+                                <div class="accommodation-name">Garden View Inn</div>
+                                <div class="accommodation-distance">1 mile from venue • 5 min drive</div>
+                                <p class="accommodation-description">A charming boutique hotel with a garden theme that complements our wedding. Complimentary breakfast included.</p>
+                                <div><strong>Rate:</strong> $150/night</div>
+                                <div><strong>Phone:</strong> (503) 555-9012</div>
+                                <a href="#" class="accommodation-link" target="_blank">Book Online</a>
+                            </div>
+                            
+                            <div class="accommodation-item">
+                                <div class="accommodation-name">Downtown Suites</div>
+                                <div class="accommodation-distance">3 miles from venue • 10 min drive</div>
+                                <p class="accommodation-description">All-suite hotel in downtown Portland. Perfect if you want to explore the city during your stay.</p>
+                                <div><strong>Rate:</strong> $140/night</div>
+                                <div><strong>Phone:</strong> (503) 555-3456</div>
+                                <a href="#" class="accommodation-link" target="_blank">Book Online</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Transportation -->
+                <div class="travel-card fade-in">
+                    <h2>Transportation</h2>
+                    <div class="travel-card-content">
+                        <div class="travel-card-text">
+                            <ul class="travel-info-list">
+                                <li>
+                                    <div class="travel-info-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c-4.42 0-8 3.58-8 8 0 1.49.41 2.89 1.13 4.07l.03.23c.05.3.1.59.22.86.36.28.75.53 1.16.74l.05.29c.14 1.33.9 2.54 2.02 3.35.08.06.17.12.25.17l.02.49c.02.33.2.63.46.79.32.2.69.3 1.06.3h3.22c.37 0 .74-.1 1.06-.3.26-.16.42-.45.44-.79l.02-.49c.08-.05.17-.11.25-.17 1.13-.81 1.9-2.02 2.03-3.35l.05-.29c.42-.21.79-.46 1.16-.74.12-.27.18-.57.22-.86l.03-.23C19.59 12.89 20 11.49 20 10c0-4.42-3.58-8-8-8zm4.31 15.3c-.18.13-.38.25-.58.37l-.01 1.25c0 .05-.03.08-.07.08h-7.31c-.04 0-.07-.03-.07-.08V17.7c-.21-.12-.4-.25-.57-.37-.87-.71-1.43-1.7-1.61-2.79l-.01-.09c-.01-.08-.03-.17-.04-.25-.01-.08-.02-.17-.02-.25 0-1.07.87-1.95 1.95-1.95s1.95.87 1.95 1.95c0 .08-.01.17-.02.25-.02.08-.02.17-.04.25l-.01.09c-.18 1.09-.75 2.08-1.61 2.79-.17.12-.36.24-.57.37v.55h3.62v-.56c-.2-.12-.38-.24-.55-.36-.87-.71-1.43-1.7-1.61-2.79l-.01-.09c-.01-.08-.03-.17-.04-.25-.01-.08-.02-.17-.02-.25 0-1.07.87-1.95 1.95-1.95s1.95.87 1.95 1.95c0 .08-.01.17-.02.25-.02.08-.02.17-.04.25l-.01.09c-.18 1.09-.75 2.08-1.61 2.79-.17.12-.36.24-.56.36v.56h3.88v-.55c-.21-.12-.4-.25-.57-.37-.87-.71-1.43-1.7-1.61-2.79l-.01-.09c-.01-.08-.03-.17-.04-.25-.01-.08-.02-.17-.02-.25 0-1.07.87-1.95 1.95-1.95s1.95.87 1.95 1.95c0 .08-.01.17-.02.25-.02.08-.02.17-.04.25l-.01.09c-.18 1.09-.75 2.08-1.61 2.79z"/></svg>
+                                    </div>
+                                    <div class="travel-info-content">
+                                        <div class="travel-info-title">Airport Information</div>
+                                        <div>The nearest airport is O'Hare International Airport (ORD), approximately 12 miles from the venue. Taxis, rideshares, and rental cars are available at the airport. Midway International Airport (MDW) is another option close to downtown Chicago.</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="travel-info-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+                                    </div>
+                                    <div class="travel-info-content">
+                                        <div class="travel-info-title">Rental Cars</div>
+                                        <div>All major rental car companies are available at O'Hare and Midway International Airports. We recommend reserving in advance, especially during the summer season.</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="travel-info-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4 16c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10zm3.5 1c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm9 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm1.5-6H6V6h12v5z"/></svg>
+                                    </div>
+                                    <div class="travel-info-content">
+                                        <div class="travel-info-title">Public Transportation</div>
+                                        <div>Chicago has excellent public transportation. The CTA Blue Line provides direct access to the venue from O'Hare and from downtown via the Logan Square and California stations, both of which are a 20 minute walk from the venue.</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Travel Tips -->
+                <div class="travel-tips fade-in">
+                    <h3 style="color:var(--white)">Local Travel Tips</h3>
+                    <div class="tips-list">
+                        <div class="tip-item">
+                            <div class="tip-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                                Weather
+                            </div>
+                            <div class="tip-content">
+                                Chicago in June is typically warm and sunny with average temperatures between 65°F and 85°F. Evenings can be cooler, so consider bringing a light jacket for when the sun goes down.
+                            </div>
+                        </div>
+                        
+                        <div class="tip-item">
+                            <div class="tip-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                                Local Attractions
+                            </div>
+                            <div class="tip-content">
+                                Consider enriching your stay by exploring Chicago's famous food scene in the Fulton Market District, beautiful greenery at the Chicago Botanic Garden, and world-class museums in the Loop. The Art Institute, Logan Square Farmers Market, and Lincoln Park Zoo are must see attractions within a few miles of our venue.
+                            </div>
+                        </div>
+                        
+                        <div class="tip-item">
+                            <div class="tip-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                                Ridesharing
+                            </div>
+                            <div class="tip-content">
+                                Uber and Lyft are widely available in Chicago and are a convenient option for getting around the city, especially when used in conjunction with the public rail and bus services provided by the CTA.
+                            </div>
+                        </div>
+                        
+                        <div class="tip-item">
+                            <div class="tip-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                                Parking
+                            </div>
+                            <div class="tip-content">
+                                Downtown Chicago parking can be limited and expensive. If staying downtown, consider using public transportation or ridesharing services rather than renting a car.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center" style="margin-top: var(--spacing-xl);justify-self: center;">
+                    <a href="rsvp.html" class="button primary-button">RSVP Now</a>
+                </div>
+            </section>
+        </main>
+
+        <!-- Mobile Navigation Toggle -->
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle">
+            <span class="toggle-icon"></span>
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/main.js"></script>
+    <script src="js/navigation.js"></script>
+</body>
+</html>

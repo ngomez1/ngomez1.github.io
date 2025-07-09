@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ</title>
+    <meta name="description" content="Frequently asked questions about Lauren and Nicholas's wedding">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="./assets/images/favicon.svg" type="image/x-icon">
+    <style>
+        /* FAQ Page Specific Styles */
+        .faq-section {
+            padding: var(--spacing-xl) 0;
+        }
+        
+        .faq-header {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .faq-header h1 {
+            font-family: var(--font-accent);
+            font-size: 4rem;
+            color: var(--secondary-pink);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .faq-header p {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .faq-search {
+            max-width: 600px;
+            margin: 0 auto var(--spacing-xl);
+            position: relative;
+        }
+        
+        .faq-search input {
+            width: 100%;
+            padding: var(--spacing-md) var(--spacing-lg);
+            padding-left: 50px;
+            border: 1px solid var(--primary-green);
+            border-radius: var(--border-radius);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            color: var(--text-dark);
+            background-color: var(--white);
+        }
+        
+        .faq-search input:focus {
+            outline: none;
+            border-color: var(--secondary-pink);
+            box-shadow: 0 0 0 2px rgba(231, 169, 188, 0.2);
+        }
+        
+        .faq-search-icon {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            width: 20px;
+            height: 20px;
+        }
+        
+        .faq-categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .faq-category-button {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            background-color: var(--off-white);
+            border: none;
+            border-radius: var(--border-radius);
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .faq-category-button:hover,
+        .faq-category-button.active {
+            background-color: var(--primary-pink);
+            color: var(--white);
+        }
+        
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-category {
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .faq-category-title {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: var(--secondary-green);
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+            position: relative;
+        }
+        
+        .faq-category-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary-pink);
+        }
+        
+        .faq-item {
+            margin-bottom: var(--spacing-md);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            background-color: var(--white);
+        }
+        
+        .faq-question {
+            padding: var(--spacing-md) var(--spacing-lg);
+            background-color: var(--off-white);
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background-color var(--transition-fast);
+        }
+        
+        .faq-question:hover {
+            background-color: var(--primary-green);
+        }
+        
+        .faq-question.active {
+            background-color: var(--primary-pink);
+            color: var(--white);
+        }
+        
+        .faq-toggle {
+            width: 20px;
+            height: 20px;
+            position: relative;
+            flex-shrink: 0;
+        }
+        
+        .faq-toggle:before,
+        .faq-toggle:after {
+            content: '';
+            position: absolute;
+            background-color: currentColor;
+            transition: transform var(--transition-fast);
+        }
+        
+        .faq-toggle:before {
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            transform: translateY(-50%);
+        }
+        
+        .faq-toggle:after {
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            transform: translateX(-50%);
+        }
+        
+        .faq-question.active .faq-toggle:after {
+            transform: translateX(-50%) rotate(90deg);
+        }
+        
+        .faq-answer {
+            padding: 0 var(--spacing-lg);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height var(--transition-medium), padding var(--transition-medium);
+        }
+        
+        .faq-question.active + .faq-answer {
+            padding: var(--spacing-md) var(--spacing-lg);
+            max-height: 500px;
+        }
+        
+        .faq-answer-content {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+        
+        .faq-contact {
+            text-align: center;
+            margin-top: var(--spacing-xxl);
+            padding: var(--spacing-xl);
+            background-color: var(--primary-green);
+            border-radius: var(--border-radius);
+        }
+        
+        .faq-contact h3 {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .faq-contact p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-dark);
+            max-width: 700px;
+            margin: 0 auto var(--spacing-lg);
+        }
+        
+        .faq-contact-email {
+            display: inline-block;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            background-color: var(--white);
+            color: var(--secondary-pink);
+            border-radius: var(--border-radius);
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            transition: all var(--transition-fast);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .faq-contact-email:hover {
+            background-color: var(--off-white);
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 767px) {
+            .faq-categories {
+                gap: var(--spacing-sm);
+            }
+            
+            .faq-category-button {
+                padding: var(--spacing-sm) var(--spacing-md);
+                font-size: 0.9rem;
+            }
+            
+            .faq-question {
+                font-size: 1rem;
+                padding: var(--spacing-md);
+            }
+            
+            .faq-question.active + .faq-answer {
+                padding: var(--spacing-md);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="site-container">
+        <!-- Side Navigation -->
+        <nav class="side-nav">
+            <div class="nav-header">
+                <div class="couple-initials">L & N</div>
+                <div class="wedding-date">06.13.2026</div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="schedule.html">Schedule</a></li>
+                <li><a href="travel.html">Travel</a></li>
+                <li><a href="registry.html">Registry</a></li>
+                <li><a href="wedding-party.html">Wedding Party</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li class="active"><a href="faq.html">FAQ</a></li>
+                <li><a href="rsvp.html" class="rsvp-button">RSVP</a></li>
+            </ul>
+            <div class="nav-footer">
+                <p>With love,</p>
+                <p class="couple-names">Lauren & Nicholas</p>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- FAQ Section -->
+            <section class="faq-section" id="faq">
+                <div class="faq-header">
+                    <h1>Frequently Asked Questions</h1>
+                    <p>Find answers to common questions about our wedding. If you don't see your question here, please don't hesitate to contact us.</p>
+                </div>
+                
+                <!-- FAQ Search -->
+                <div class="faq-search">
+                    <svg class="faq-search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                    <input type="text" id="faq-search-input" placeholder="Search for a question...">
+                </div>
+                
+                <!-- FAQ Categories -->
+                <div class="faq-categories">
+                    <button class="faq-category-button active" data-category="all" id="allCats">All Questions</button>
+                    <button class="faq-category-button" data-category="ceremony">Ceremony & Reception</button>
+                    <button class="faq-category-button" data-category="travel">Travel & Accommodations</button>
+                    <button class="faq-category-button" data-category="attire">Attire & Gifts</button>
+                    <button class="faq-category-button" data-category="other">Other</button>
+                </div>
+                
+                <!-- FAQ List -->
+                <div class="faq-list">
+                    <!-- Ceremony & Reception -->
+                    <div class="faq-category" data-category="ceremony">
+                        <h2 class="faq-category-title">Ceremony & Reception</h2>
+                        
+                        <div class="faq-item fade-in">
+                            <div class="faq-question">
+                                <span>What time should I arrive for the ceremony?</span>
+                                <div class="faq-toggle"></div>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>We recommend arriving 30 minutes before the ceremony start time to allow time for parking, finding your seat, and greeting other guests. The ceremony will begin promptly at 5:30 PM.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item fade-in">
+                            <div class="faq-question">
+                                <span>How long will the ceremony and reception last?</span>
+                                <div class="faq-toggle"></div>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>The ceremony will last approximately 30 minutes. Cocktail hour will follow from 6:00 PM to 7:00 PM, and the reception is scheduled to end at midnight. You're welcome to stay for as long or as little as you'd like!</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item fade-in">
+                            <div class="faq-question">
+                                <span>Will the ceremony and reception be indoors or outdoors?</span>
+                                <div class="faq-toggle"></div>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>The ceremony will be held indoors in the glasshouse. The cocktail hour will held in the sky garden and art gallery, and the reception will be in the glasshouse. In case of inclement weather, the cocktail hour will be held exclusively in the art gallery.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item fade-in">
+                            <div class="faq-question">
+                                <span>Will there be food served at the reception?</span>
+                                <div class="faq-toggle"></div>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>Yes! We will be serving a plated dinner with your choice of entrée (as selected in your RSVP). Hors d'oeuvres will be served during the cocktail hour, and cake will be served for dessert. We've also arranged for late-night snacks for those who stay to dance the night away!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Travel & Accommodations -->
+                    <div class="faq-category" data-category="travel">
+                        <h2 class="faq-category-title">Travel & Accommodations</h2>
+                        
+                        <div class="faq-item fade-in">
+                            <div class="faq-question">
+                                <span>Where should I stay?</span>
+                                <div class="faq-toggle"></div>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>We've arranged room blocks at several hotels near the venue. Please see the Travel page for details and booking information. We recommend booking your accommodations early, as June is a popular time to visit Chicago.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item fade-in">
+                            <div class="faq-question">
+                                <span>Is there parking available at the venue?</span>
+                                <div class="faq-toggle"></div>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>Yes, complimentary parking is available at Greenhouse Loft. See the Travel page for details.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item fade-in">
+                            <div class="faq-question">
+                                <span>Will there be transportation provided?</span>
+                                <div class="faq-toggle"></div>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>No, but the venue is easily accessible via Interstate 90 and the CTA Blue Line.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item fade-in">
+                            <div class="faq-question">
+                                <span>Which airport should I fly into?</span>
+                                <div class="faq-toggle"></div>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>The nearest airport is O'Hare International Airport (ORD), which is approximately 12 miles from the venue. Most major airlines serve ORD, and rental cars, taxis, and rideshare services are readily available at the airport. Midway International Airport (MDW) is another nearby option.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Attire & Gifts -->
+                    <div class="faq-category" data-category="attire">
+                        <h2 class="faq-category-title">Attire & Gifts</h2>
+                        
+                        <div class="faq-item fade-in">
+                            <div class="faq-question">
+                                <span>What is the dress code?</span>
+                                <div class="faq-toggle"></div>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>The dress code for our wedding is semi-formal. Men may wear suits, and women may wear cocktail dresses or gowns. Please note that the cocktail hour will be outdoors (weather permitting), so consider appropriate footwear for garden terrain.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item fade-in">
+                            <div class="faq-question">
+                                <span>Are there any colors I should avoid wearing?</span>
+                                <div class="faq-toggle"></div>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>We kindly ask that guests avoid wearing all white, cream, or ivory, as these colors are reserved for the bride. Otherwise, feel free to wear any color you like!</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item fade-in">
+                            <div class="faq-question">
+                                <span>Where are you registered?</span>
+                                <div class="faq-toggle"></div>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>Please visit the Registry page.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item fade-in">
+                            <div class="faq-question">
+                                <span>Should I bring my gift to the wedding?</span>
+                                <div class="faq-toggle"></div>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>Please visit the Registry page.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Other Questions -->
+                    <div class="faq-category" data-category="other">
+                        <h2 class="faq-category-title">Other Questions</h2>
+                        
+                        <div class="faq-item fade-in">
+                            <div class="faq-question">
+                                <span>Can I bring a date/plus one?</span>
+                                <div class="faq-toggle"></div>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>Due to venue capacity limitations, we can only accommodate those guests named on your invitation. If your invitation includes "and Guest" or your partner's name, you are welcome to bring them. If you have any questions about this, please contact us directly.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item fade-in">
+                            <div class="faq-question">
+                                <span>Are children invited?</span>
+                                <div class="faq-toggle"></div>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>We love your little ones, but we've decided to keep our wedding an adults-only celebration. We are grateful for your understanding.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item fade-in">
+                            <div class="faq-question">
+                                <span>Will the wedding be photographed/videoed?</span>
+                                <div class="faq-toggle"></div>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>Yes, we will have professional photographers capturing our special day. We kindly ask that guests refrain from taking photos during the ceremony, as we'd love to see your faces rather than your phones! You're welcome to take photos during the reception, and we encourage you to share them using our wedding hashtag #LaurenAndNicholas2026.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item fade-in">
+                            <div class="faq-question">
+                                <span>What if I have food allergies or other dietary restrictions?</span>
+                                <div class="faq-toggle"></div>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <p>We're happy to accommodate dietary restrictions. Please indicate any allergies or dietary needs in your RSVP, and we'll work with our caterer to ensure you have an enjoyable meal.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Section -->
+                <div class="faq-contact fade-in">
+                    <h3 style="color: var(--white);">Still Have Questions?</h3>
+                    <p style="color: var(--white);">If you didn't find the answer to your question, please don't hesitate to reach out to us directly. We're happy to help!</p>
+                    <a href="mailto:questions@laurenandnicholas.info" class="faq-contact-email" style="color: var(--primary-green);">questions@laurenandnicholas.info</a>
+                    <a href="rsvp.html" class="button primary-button" style="background-color: var(--primary-pink);">RSVP Now</a>
+                </div>
+            </section>
+        </main>
+
+        <!-- Mobile Navigation Toggle -->
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle">
+            <span class="toggle-icon"></span>
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/main.js"></script>
+    <script src="js/navigation.js"></script>
+    <script>
+        // FAQ Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle FAQ answers
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                });
+            });
+            
+            // Filter FAQ categories
+            const categoryButtons = document.querySelectorAll('.faq-category-button');
+            const faqCategories = document.querySelectorAll('.faq-category');
+            
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Get category to filter
+                    const filter = this.getAttribute('data-category');
+                    
+                    // Show/hide categories based on filter
+                    faqCategories.forEach(category => {
+                        if (filter === 'all' || category.getAttribute('data-category') === filter) {
+                            category.style.display = 'block';
+                        } else {
+                            category.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Search functionality
+            const searchInput = document.getElementById('faq-search-input');
+            const faqItems = document.querySelectorAll('.faq-item');
+        
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                
+                faqItems.forEach(item => {
+                    const question = item.querySelector('.faq-question span').textContent.toLowerCase();
+                    const answer = item.querySelector('.faq-answer-content').textContent.toLowerCase();
+                    
+                    if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                
+                document.getElementsById('allCats').click();
+
+                // Show/hide category headers based on visible items
+                faqCategories.forEach(category => {
+                    const visibleItems = category.querySelectorAll('.faq-item[style="display: block"]');
+                    
+                    if (visibleItems.length === 0) {
+                        category.style.display = 'none';
+                    } else {
+                        category.style.display = 'block';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

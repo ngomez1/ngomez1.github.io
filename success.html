@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSVP Confirmed</title>
+    <meta name="description" content="Thank you for your RSVP to Lauren's and Nicholas' wedding">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="./assets/images/favicon.svg" type="image/x-icon">
+    <style>
+        /* Success Page Specific Styles */
+        .success-section {
+            padding: var(--spacing-xxl) 0;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background-color: var(--primary-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--spacing-xl);
+            animation: scale-in 0.5s ease-out;
+        }
+        
+        .success-icon svg {
+            width: 50px;
+            height: 50px;
+            color: var(--white);
+        }
+        
+        .success-header h1 {
+            font-family: var(--font-accent);
+            font-size: 4rem;
+            color: var(--secondary-pink);
+            margin-bottom: var(--spacing-md);
+            animation: fade-in 1s ease-out;
+        }
+        
+        .success-header p {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-xl);
+            animation: fade-in 1.5s ease-out;
+        }
+        
+        .success-details {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            animation: slide-up 1s ease-out;
+        }
+        
+        .success-details h2 {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: var(--secondary-green);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .success-details p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .success-details ul {
+            text-align: left;
+            max-width: 500px;
+            margin: var(--spacing-lg) auto;
+            padding-left: var(--spacing-xl);
+        }
+        
+        .success-details li {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .success-details .highlight {
+            display: inline-block;
+            background-color: var(--primary-pink);
+            color: var(--white);
+            padding: var(--spacing-xs) var(--spacing-md);
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            margin: var(--spacing-sm) 0;
+        }
+        
+        .success-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-xl);
+            animation: fade-in 2s ease-out;
+        }
+        
+        .success-actions .button {
+            min-width: 200px;
+        }
+        
+        .countdown-container {
+            margin: var(--spacing-xl) auto;
+            text-align: center;
+            animation: fade-in 2.5s ease-out;
+        }
+        
+        .countdown-container h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--secondary-green);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-md);
+        }
+        
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 80px;
+        }
+        
+        .countdown-value {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--primary-pink);
+            line-height: 1;
+        }
+        
+        .countdown-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: var(--spacing-xs);
+        }
+        
+        .share-section {
+            margin-top: var(--spacing-xxl);
+            animation: fade-in 3s ease-out;
+        }
+        
+        .share-section h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--secondary-green);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .share-section p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .social-share {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+        
+        .social-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--off-white);
+            color: var(--text-dark);
+            transition: all var(--transition-fast);
+        }
+        
+        .social-button:hover {
+            background-color: var(--primary-pink);
+            color: var(--white);
+            transform: translateY(-3px);
+        }
+        
+        .social-button svg {
+            width: 24px;
+            height: 24px;
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: var(--primary-pink);
+            opacity: 0;
+            animation: confetti 5s ease-in infinite;
+        }
+        
+        .confetti.green {
+            background-color: var(--primary-green);
+        }
+        
+        .confetti.gold {
+            background-color: var(--accent-gold);
+        }
+        
+        @keyframes confetti {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes scale-in {
+            0% {
+                transform: scale(0);
+            }
+            70% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes slide-up {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 767px) {
+            .countdown {
+                flex-wrap: wrap;
+            }
+            
+            .success-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .success-actions .button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="site-container">
+        <!-- Side Navigation -->
+        <nav class="side-nav">
+            <div class="nav-header">
+                <div class="couple-initials">L & N</div>
+                <div class="wedding-date">06.13.2026</div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="schedule.html">Schedule</a></li>
+                <li><a href="travel.html">Travel</a></li>
+                <li><a href="registry.html">Registry</a></li>
+                <li><a href="wedding-party.html">Wedding Party</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="rsvp.html" class="rsvp-button">RSVP</a></li>
+            </ul>
+            <div class="nav-footer">
+                <p>With love,</p>
+                <p class="couple-names">Lauren & Nicholas</p>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Success Section -->
+            <section class="success-section" id="success">
+                <div class="success-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                </div>
+                
+                <div class="success-header">
+                    <h1>Thank You!</h1>
+                    <p>Your RSVP has been successfully submitted.</p>
+                </div>
+                
+                <div class="success-details">
+                    <h2>What's Next?</h2>
+                    <p>We're thrilled that you'll be joining us on our special day! Here's what you can expect next:</p>
+                    
+                    <ul>
+                        <li>You'll receive a formal wedding invitation several months before the big day.</li>
+                        <li>As the wedding date approaches, we'll send updates and reminders to the email address you provided.</li>
+                        <li>If you need to make any changes to your RSVP, please contact us directly at questions@laurenandnicholas.info.</li>
+                    </ul>
+                    
+                    <p>Mark your calendar for <span class="highlight">June 13, 2026</span> - we can't wait to celebrate with you!</p>
+                </div>
+                
+                <div class="countdown-container">
+                    <h3>Countdown to the Big Day</h3>
+                    <div class="countdown" id="wedding-countdown">
+                        <div class="countdown-item">
+                            <div class="countdown-value" id="countdown-days">0</div>
+                            <div class="countdown-label">Days</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-value" id="countdown-hours">0</div>
+                            <div class="countdown-label">Hours</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-value" id="countdown-minutes">0</div>
+                            <div class="countdown-label">Minutes</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-value" id="countdown-seconds">0</div>
+                            <div class="countdown-label">Seconds</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="success-actions">
+                    <a href="index.html" class="button secondary-button">Return to Home</a>
+                    <a href="schedule.html" class="button primary-button">View Schedule</a>
+                    <a href="travel.html" class="button secondary-button">Travel Information</a>
+                </div>
+            </section>
+        </main>
+
+        <!-- Mobile Navigation Toggle -->
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle">
+            <span class="toggle-icon"></span>
+        </button>
+    </div>
+
+    <!-- Confetti Animation -->
+    <div id="confetti-container"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/main.js"></script>
+    <script src="js/navigation.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Countdown Timer
+            function updateCountdown() {
+                const weddingDate = new Date('June 13, 2026 17:00:00').getTime();
+                const now = new Date().getTime();
+                const timeRemaining = weddingDate - now;
+                
+                const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+                
+                document.getElementById('countdown-days').textContent = days;
+                document.getElementById('countdown-hours').textContent = hours;
+                document.getElementById('countdown-minutes').textContent = minutes;
+                document.getElementById('countdown-seconds').textContent = seconds;
+            }
+            
+            // Update countdown every second
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+            
+            // Create confetti animation
+            const confettiContainer = document.getElementById('confetti-container');
+            const colors = ['', 'green', 'gold'];
+            
+            function createConfetti() {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti ' + colors[Math.floor(Math.random() * colors.length)];
+                
+                // Random position
+                const posX = Math.random() * window.innerWidth;
+                confetti.style.left = posX + 'px';
+                
+                // Random size
+                const size = Math.random() * 10 + 5;
+                confetti.style.width = size + 'px';
+                confetti.style.height = size + 'px';
+                
+                // Random rotation
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                
+                // Random animation duration
+                const duration = Math.random() * 3 + 2;
+                confetti.style.animationDuration = duration + 's';
+                
+                // Random delay
+                const delay = Math.random() * 5;
+                confetti.style.animationDelay = delay + 's';
+                
+                confettiContainer.appendChild(confetti);
+                
+                // Remove confetti after animation completes
+                setTimeout(() => {
+                    confetti.remove();
+                }, (duration + delay) * 1000);
+            }
+            
+            // Create initial batch of confetti
+            for (let i = 0; i < 100; i++) {
+                createConfetti();
+            }
+            
+            // Continue adding confetti
+            setInterval(() => {
+                for (let i = 0; i < 5; i++) {
+                    createConfetti();
+                }
+            }, 500);
+            
+            // Social share buttons functionality
+            const socialButtons = document.querySelectorAll('.social-button');
+            socialButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const shareText = "I'm attending Sarah and Michael's wedding on August 15, 2026! #SarahAndMichael2026";
+                    const shareUrl = window.location.origin;
+                    
+                    let shareWindow;
+                    
+                    if (this.getAttribute('aria-label').includes('Facebook')) {
+                        shareWindow = window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`, 'facebook-share', 'width=580,height=296');
+                    } else if (this.getAttribute('aria-label').includes('Twitter')) {
+                        shareWindow = window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`, 'twitter-share', 'width=550,height=235');
+                    } else if (this.getAttribute('aria-label').includes('Instagram')) {
+                        alert('To share on Instagram, please take a screenshot and share it from your Instagram app with the hashtag #SarahAndMichael2026');
+                    }
+                    
+                    if (shareWindow) {
+                        shareWindow.focus();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

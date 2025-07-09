@@ -1,0 +1,247 @@
+/* 
+ * Wedding Website - Animations Stylesheet
+ * Contains all animations, transitions, and motion effects
+ */
+
+/* ===== Page Transitions ===== */
+.page-transition {
+    animation: fadeIn 0.8s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== Scroll Animations ===== */
+.fade-in {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fade-in-left {
+    opacity: 0;
+    transform: translateX(-15px);
+    transition: opacity 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.fade-in-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.fade-in-right {
+    opacity: 0;
+    transform: translateX(15px);
+    transition: opacity 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.fade-in-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* ===== Hover Effects ===== */
+.hover-lift {
+    transition: transform 0.3s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-5px);
+}
+
+.hover-glow {
+    transition: box-shadow 0.3s ease;
+}
+
+.hover-glow:hover {
+    box-shadow: 0 0 15px rgba(46, 93, 75, 0.3);
+}
+
+/* ===== Button Animations ===== */
+.button-pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* ===== Loading Animation ===== */
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(46, 93, 75, 0.1);
+    border-radius: 50%;
+    border-top-color: var(--primary-green);
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ===== Gallery Animations ===== */
+.gallery-item {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== Timeline Animations ===== */
+.timeline-item {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.timeline-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.timeline-item:nth-child(odd) {
+    transform: translateX(-10px);
+}
+
+.timeline-item:nth-child(even) {
+    transform: translateX(10px);
+}
+
+.timeline-item.visible:nth-child(odd),
+.timeline-item.visible:nth-child(even) {
+    transform: translateX(0);
+}
+
+/* ===== Floral Animation ===== */
+.floral-animation {
+    animation: sway 6s ease-in-out infinite;
+    transform-origin: bottom center;
+}
+
+@keyframes sway {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(2deg);
+    }
+    75% {
+        transform: rotate(-2deg);
+    }
+}
+
+/* ===== Mobile Navigation Animation ===== */
+.nav-open .side-nav {
+    transform: translateX(0);
+}
+
+.nav-open .toggle-icon {
+    background-color: transparent;
+}
+
+.nav-open .toggle-icon:before {
+    transform: rotate(45deg);
+    top: 0;
+}
+
+.nav-open .toggle-icon:after {
+    transform: rotate(-45deg);
+    bottom: 0;
+}
+
+/* ===== Countdown Animation ===== */
+.countdown-number {
+    animation: countPulse 2s infinite;
+}
+
+@keyframes countPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* ===== Form Feedback Animations ===== */
+.form-success {
+    animation: successPulse 0.5s ease;
+}
+
+@keyframes successPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.form-error {
+    animation: errorShake 0.5s ease;
+}
+
+@keyframes errorShake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-10px);
+    }
+    75% {
+        transform: translateX(10px);
+    }
+}
+
+/* ===== Photo Hover Effect ===== */
+.photo-hover {
+    overflow: hidden;
+}
+
+.photo-hover img {
+    transition: transform 0.5s ease;
+}
+
+.photo-hover:hover img {
+    transform: scale(1.1);
+}
+
+/* ===== Decorative Elements Animation ===== */
+.decorative-element {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}

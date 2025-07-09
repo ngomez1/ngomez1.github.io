@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSVP</title>
+    <meta name="description" content="RSVP for Nicholas Alexander Gomez and Lauren Nicole Mitchell's wedding">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="./assets/images/favicon.svg" type="image/x-icon">
+    <style>
+        /* RSVP Page Specific Styles */
+        .rsvp-section {
+            padding: var(--spacing-xl) 0;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .rsvp-header {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .rsvp-header h1 {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin-bottom: var(--spacing-md);
+            letter-spacing: -0.5px;
+        }
+        
+        .rsvp-header p {
+            font-family: var(--font-body);
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .rsvp-deadline {
+            display: inline-block;
+            margin: var(--spacing-md) 0;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-pink));
+            color: var(--white);
+            border-radius: 30px;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            box-shadow: var(--button-shadow);
+        }
+        
+        .rsvp-form-container {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .rsvp-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+        }
+        
+        .form-group {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .form-group label {
+            display: block;
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: var(--spacing-md) var(--spacing-md);
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            color: var(--text-dark);
+            background-color: var(--white);
+            transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(46, 93, 75, 0.15);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .form-group .radio-group,
+        .form-group .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-xs);
+        }
+        
+        .radio-option,
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .radio-option input,
+        .checkbox-option input {
+            width: auto;
+            margin-right: var(--spacing-xs);
+        }
+        
+        .form-group .helper-text {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: var(--spacing-xs);
+        }
+        
+        .form-group .error-message {
+            display: none;
+            color: var(--error);
+            font-size: 0.85rem;
+            margin-top: var(--spacing-xs);
+        }
+        
+        .form-group.error input,
+        .form-group.error select,
+        .form-group.error textarea {
+            border-color: #FF4136;
+        }
+        
+        .form-group.error .error-message {
+            display: block;
+            color: #FF4136;
+        }
+        
+        .form-section {
+            grid-column: 1 / -1;
+            margin: var(--spacing-lg) 0 var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .form-section h3 {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-pink);
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+        
+        .guest-details {
+            display: none;
+            grid-column: 1 / -1;
+            background-color: var(--off-white);
+            border-radius: var(--border-radius);
+            padding: var(--spacing-md);
+            margin-top: var(--spacing-sm);
+        }
+        
+        .guest-details.active {
+            display: block;
+        }
+        
+        .guest-details h4 {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            margin-top: 0;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .guest-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-md);
+        }
+        
+        .add-guest-button {
+            display: inline-flex;
+            align-items: center;
+            background: none;
+            border: none;
+            color: var(--primary-pink);
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 0;
+            margin-top: var(--spacing-sm);
+        }
+        
+        .add-guest-button svg {
+            width: 16px;
+            height: 16px;
+            margin-right: var(--spacing-xs);
+        }
+        
+        .add-guest-button:hover {
+            color: var(--secondary-pink);
+            text-decoration: underline;
+        }
+        
+        .form-actions {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: var(--spacing-lg);
+        }
+        
+        .form-actions .button {
+            min-width: 150px;
+            padding: var(--spacing-md) var(--spacing-lg);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border-radius: 30px;
+            box-shadow: var(--button-shadow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .form-actions .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(58, 134, 255, 0.3);
+        }
+        
+        .required-note {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        
+        .required-field::after {
+            content: '*';
+            color: var(--error);
+            margin-left: 4px;
+        }
+        
+        .rsvp-info {
+            text-align: center;
+            margin-top: var(--spacing-xl);
+            padding: var(--spacing-xl);
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+        }
+        
+        .rsvp-info h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin-bottom: var(--spacing-md);
+            letter-spacing: -0.5px;
+        }
+        
+        .rsvp-info p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-dark);
+            max-width: 700px;
+            margin: 0 auto var(--spacing-md);
+        }
+        
+        .rsvp-contact {
+            display: inline-block;
+            margin-top: var(--spacing-md);
+            padding: var(--spacing-sm) var(--spacing-lg);
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-pink));
+            color: var(--white);
+            border-radius: 30px;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            transition: all var(--transition-fast);
+            box-shadow: var(--button-shadow);
+        }
+        
+        .rsvp-contact:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(58, 134, 255, 0.3);
+        }
+        
+        .loading-indicator {
+            display: none;
+            text-align: center;
+            padding: var(--spacing-xl);
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--light-gray);
+            border-top: 5px solid var(--primary-green);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto var(--spacing-md);
+            box-shadow: 0 0 10px rgba(58, 134, 255, 0.1);
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 767px) {
+            .rsvp-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .guest-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+            
+            .form-actions .button {
+                width: 100%;
+            }
+            
+            .required-note {
+                order: -1;
+                margin-bottom: var(--spacing-md);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="site-container">
+        <!-- Side Navigation -->
+        <nav class="side-nav">
+            <div class="nav-header">
+                <div class="couple-initials">L & N</div>
+                <div class="wedding-date">06.13.2026</div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="schedule.html">Schedule</a></li>
+                <li><a href="travel.html">Travel</a></li>
+                <li><a href="registry.html">Registry</a></li>
+                <li><a href="wedding-party.html">Wedding Party</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li class="active"><a href="rsvp.html" class="rsvp-button">RSVP</a></li>
+            </ul>
+            <div class="nav-footer">
+                <p>With love,</p>
+                <p class="couple-names">Lauren & Nicholas</p>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- RSVP Section -->
+            <section class="rsvp-section" id="rsvp">
+                <div class="rsvp-header">
+                    <h1 style="color: var(--primary-pink);">RSVP</h1>
+                    <p>We're excited to celebrate our special day with you! Please fill out the form below to let us know if you'll be joining us.</p>
+                    <div class="rsvp-deadline">Please RSVP by December 31, 2025</div>
+                </div>
+                
+                <div class="rsvp-form-container fade-in">
+                    <form id="rsvp-form" class="rsvp-form">
+                        <!-- Primary Guest Information -->
+                        <div class="form-section">
+                            <h3>Your Information</h3>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="first-name" class="required-field">First Name</label>
+                            <input type="text" id="first-name" name="first_name" required>
+                            <span class="error-message">Please enter your first name</span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="last-name" class="required-field">Last Name</label>
+                            <input type="text" id="last-name" name="last_name" required>
+                            <span class="error-message">Please enter your last name</span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email" class="required-field">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                            <span class="error-message">Please enter a valid email address</span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone">
+                            <span class="helper-text">Optional, but helpful for last-minute updates</span>
+                        </div>
+                        
+                        <!-- RSVP Response -->
+                        <div class="form-section">
+                            <h3>RSVP Response</h3>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label class="required-field">Will you be attending?</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="attending" value="yes" required> Yes, I'll be there!
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="attending" value="no"> Unfortunately, I can't make it
+                                </label>
+                            </div>
+                            <span class="error-message">Please select an option</span>
+                        </div>
+                        
+                        <!-- Attendance Details (shown only if attending) -->
+                        <div id="attendance-details" style="display: none;" class="full-width">
+                            <!-- Guest Count -->
+                            <div class="form-group">
+                                <label for="guest-count" class="required-field">Number of Guests in Your Party</label>
+                                <select id="guest-count" name="guest_count" required>
+                                    <option value="">Select</option>
+                                    <option value="1">Just me (1)</option>
+                                    <option value="2">Me + 1 guest (2)</option>
+                                    <option value="3">Me + 2 guests (3)</option>
+                                    <option value="4">Me + 3 guests (4)</option>
+                                </select>
+                                <span class="helper-text">Please only include guests named on your invitation</span>
+                                <span class="error-message">Please select the number of guests</span>
+                            </div>
+                            
+                            <!-- Meal Preference -->
+                            <div class="form-group">
+                                <label for="meal-preference" class="required-field">Your Meal Preference</label>
+                                <select id="meal-preference" name="meal_preference" required>
+                                    <option value="">Select</option>
+                                    <option value="beef">Beef Tenderloin</option>
+                                    <option value="chicken">Herb Roasted Chicken</option>
+                                    <option value="fish">Grilled Salmon</option>
+                                    <option value="vegetarian">Vegetarian Option</option>
+                                    <option value="vegan">Vegan Option</option>
+                                </select>
+                                <span class="error-message">Please select a meal preference</span>
+                            </div>
+                            
+                            <!-- Dietary Restrictions -->
+                            <div class="form-group full-width">
+                                <label for="dietary-restrictions">Dietary Restrictions or Allergies</label>
+                                <textarea id="dietary-restrictions" name="dietary_restrictions" placeholder="Please list any allergies or dietary restrictions we should know about"></textarea>
+                            </div>
+                            
+                            <!-- Additional Guests (shown based on guest count) -->
+                            <div id="additional-guests-container" class="full-width"></div>
+                            
+                            <!-- Song Requests -->
+                            <div class="form-section">
+                                <h3>Song Requests</h3>
+                            </div>
+                            
+                            <div class="form-group full-width">
+                                <label for="song-requests">Songs You'd Like to Hear</label>
+                                <textarea id="song-requests" name="song_requests" placeholder="Let us know what songs will get you on the dance floor!"></textarea>
+                                <span class="helper-text">We'll try our best to include your requests in our playlist</span>
+                            </div>
+                            
+                            <!-- Special Notes -->
+                            <div class="form-section">
+                                <h3>Additional Information</h3>
+                            </div>
+                            
+                            <div class="form-group full-width">
+                                <label for="notes">Anything else we should know?</label>
+                                <textarea id="notes" name="notes" placeholder="Share any additional information or questions you might have"></textarea>
+                            </div>
+                        </div>
+                        
+                        <!-- Form Actions -->
+                        <div class="form-actions">
+                            <span class="required-note">* Required fields</span>
+                            <button type="submit" class="button primary-button" id="submit-rsvp">Submit RSVP</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Loading Indicator -->
+                <div class="loading-indicator" id="loading-indicator">
+                    <div class="loading-spinner"></div>
+                    <p>Submitting your RSVP...</p>
+                </div>
+                
+                <!-- RSVP Info -->
+                <div class="rsvp-info fade-in">
+                    <h3>Questions About RSVPing?</h3>
+                    <p>If you have any questions about your RSVP or need to make changes after submitting, please don't hesitate to contact us.</p>
+                    <a href="mailto:questions@laurenandnicholas.info" class="rsvp-contact">questions@laurenandnicholas.info</a>
+                </div>
+            </section>
+        </main>
+
+        <!-- Mobile Navigation Toggle -->
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle">
+            <span class="toggle-icon"></span>
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/main.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/supabase.js"></script>
+    <script src="js/rsvp.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // These elements are now handled by js/rsvp.js
+            const guestCountSelect = document.getElementById('guest-count');
+            const additionalGuestsContainer = document.getElementById('additional-guests-container');
+            
+            // Generate additional guest forms based on guest count
+            guestCountSelect.addEventListener('change', function() {
+                const guestCount = parseInt(this.value);
+                additionalGuestsContainer.innerHTML = '';
+                
+                if (guestCount > 1) {
+                    for (let i = 1; i < guestCount; i++) {
+                        const guestForm = createGuestForm(i);
+                        additionalGuestsContainer.appendChild(guestForm);
+                    }
+                }
+            });
+            
+            // Create form for additional guest
+            function createGuestForm(index) {
+                const guestDetails = document.createElement('div');
+                guestDetails.className = 'guest-details active';
+                
+                const guestTitle = document.createElement('h4');
+                guestTitle.textContent = `Guest ${index} Information`;
+                guestDetails.appendChild(guestTitle);
+                
+                const guestForm = document.createElement('div');
+                guestForm.className = 'guest-form';
+                
+                // First Name
+                const firstNameGroup = document.createElement('div');
+                firstNameGroup.className = 'form-group';
+                
+                const firstNameLabel = document.createElement('label');
+                firstNameLabel.className = 'required-field';
+                firstNameLabel.setAttribute('for', `guest-${index}-first-name`);
+                firstNameLabel.textContent = 'First Name';
+                
+                const firstNameInput = document.createElement('input');
+                firstNameInput.type = 'text';
+                firstNameInput.id = `guest-${index}-first-name`;
+                firstNameInput.name = `guest_${index}_first_name`;
+                firstNameInput.required = true;
+                
+                const firstNameError = document.createElement('span');
+                firstNameError.className = 'error-message';
+                firstNameError.textContent = 'Please enter guest\'s first name';
+                
+                firstNameGroup.appendChild(firstNameLabel);
+                firstNameGroup.appendChild(firstNameInput);
+                firstNameGroup.appendChild(firstNameError);
+                
+                // Last Name
+                const lastNameGroup = document.createElement('div');
+                lastNameGroup.className = 'form-group';
+                
+                const lastNameLabel = document.createElement('label');
+                lastNameLabel.className = 'required-field';
+                lastNameLabel.setAttribute('for', `guest-${index}-last-name`);
+                lastNameLabel.textContent = 'Last Name';
+                
+                const lastNameInput = document.createElement('input');
+                lastNameInput.type = 'text';
+                lastNameInput.id = `guest-${index}-last-name`;
+                lastNameInput.name = `guest_${index}_last_name`;
+                lastNameInput.required = true;
+                
+                const lastNameError = document.createElement('span');
+                lastNameError.className = 'error-message';
+                lastNameError.textContent = 'Please enter guest\'s last name';
+                
+                lastNameGroup.appendChild(lastNameLabel);
+                lastNameGroup.appendChild(lastNameInput);
+                lastNameGroup.appendChild(lastNameError);
+                
+                // Meal Preference
+                const mealGroup = document.createElement('div');
+                mealGroup.className = 'form-group';
+                
+                const mealLabel = document.createElement('label');
+                mealLabel.className = 'required-field';
+                mealLabel.setAttribute('for', `guest-${index}-meal`);
+                mealLabel.textContent = 'Meal Preference';
+                
+                const mealSelect = document.createElement('select');
+                mealSelect.id = `guest-${index}-meal`;
+                mealSelect.name = `guest_${index}_meal`;
+                mealSelect.required = true;
+                
+                const mealOptions = [
+                    { value: '', text: 'Select' },
+                    { value: 'beef', text: 'Beef Tenderloin' },
+                    { value: 'chicken', text: 'Herb Roasted Chicken' },
+                    { value: 'fish', text: 'Grilled Salmon' },
+                    { value: 'vegetarian', text: 'Vegetarian Option' },
+                    { value: 'vegan', text: 'Vegan Option' }
+                ];
+                
+                mealOptions.forEach(option => {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = option.value;
+                    optionElement.textContent = option.text;
+                    mealSelect.appendChild(optionElement);
+                });
+                
+                const mealError = document.createElement('span');
+                mealError.className = 'error-message';
+                mealError.textContent = 'Please select a meal preference';
+                
+                mealGroup.appendChild(mealLabel);
+                mealGroup.appendChild(mealSelect);
+                mealGroup.appendChild(mealError);
+                
+                // Dietary Restrictions
+                const dietaryGroup = document.createElement('div');
+                dietaryGroup.className = 'form-group';
+                
+                const dietaryLabel = document.createElement('label');
+                dietaryLabel.setAttribute('for', `guest-${index}-dietary`);
+                dietaryLabel.textContent = 'Dietary Restrictions';
+                
+                const dietaryInput = document.createElement('input');
+                dietaryInput.type = 'text';
+                dietaryInput.id = `guest-${index}-dietary`;
+                dietaryInput.name = `guest_${index}_dietary`;
+                dietaryInput.placeholder = 'Any allergies or restrictions';
+                
+                dietaryGroup.appendChild(dietaryLabel);
+                dietaryGroup.appendChild(dietaryInput);
+                
+                // Add all groups to the form
+                guestForm.appendChild(firstNameGroup);
+                guestForm.appendChild(lastNameGroup);
+                guestForm.appendChild(mealGroup);
+                guestForm.appendChild(dietaryGroup);
+                
+                guestDetails.appendChild(guestForm);
+                return guestDetails;
+            }
+            
+            // Form submission is now handled by js/rsvp.js
+        });
+    </script>
+</body>
+</html>

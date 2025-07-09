@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Gallery</title>
+    <meta name="description" content="Photo gallery for Lauren and Nicholas's wedding">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="./assets/images/favicon.svg" type="image/x-icon">
+    <style>
+        /* Gallery Page Specific Styles */
+        .gallery-section {
+            padding: var(--spacing-xl) 0;
+        }
+        
+        .gallery-header {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .gallery-header h1 {
+            font-family: var(--font-accent);
+            font-size: 4rem;
+            color: var(--secondary-pink);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .gallery-header p {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .gallery-filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .gallery-filter-button {
+            padding: var(--spacing-sm) var(--spacing-md);
+            background-color: var(--off-white);
+            border: none;
+            border-radius: var(--border-radius);
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .gallery-filter-button:hover,
+        .gallery-filter-button.active {
+            background-color: var(--primary-pink);
+            color: var(--white);
+        }
+        
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            cursor: pointer;
+            height: 300px;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition-medium);
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: var(--spacing-sm) var(--spacing-md);
+            background-color: rgba(255, 255, 255, 0.9);
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            transform: translateY(100%);
+            transition: transform var(--transition-fast);
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        
+        /* Lightbox Styles */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .lightbox.active {
+            display: block;
+        }
+        
+        .lightbox-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+        
+        .lightbox-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 80%;
+            margin: 0 auto;
+        }
+        
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 80vh;
+            display: block;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .lightbox-caption {
+            position: absolute;
+            bottom: -40px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: var(--white);
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            padding: var(--spacing-sm) 0;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background-color: transparent;
+            border: none;
+            color: var(--white);
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 1010;
+        }
+        
+        .lightbox-prev,
+        .lightbox-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            color: var(--white);
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 1010;
+            transition: background-color var(--transition-fast);
+        }
+        
+        .lightbox-prev:hover,
+        .lightbox-next:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+        
+        .lightbox-prev {
+            left: 20px;
+        }
+        
+        .lightbox-next {
+            right: 20px;
+        }
+        
+        .gallery-note {
+            text-align: center;
+            margin-top: var(--spacing-xl);
+            padding: var(--spacing-lg);
+            background-color: var(--off-white);
+            border-radius: var(--border-radius);
+        }
+        
+        .gallery-note h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--secondary-green);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .gallery-note p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-dark);
+            max-width: 700px;
+            margin: 0 auto var(--spacing-md);
+        }
+        
+        .lightbox-open {
+            overflow: hidden;
+        }
+        
+        @media (max-width: 767px) {
+            .gallery-container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: var(--spacing-sm);
+            }
+            
+            .gallery-item {
+                height: 250px;
+            }
+            
+            .lightbox-prev,
+            .lightbox-next {
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
+            }
+            
+            .lightbox-prev {
+                left: 10px;
+            }
+            
+            .lightbox-next {
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="site-container">
+        <!-- Side Navigation -->
+        <nav class="side-nav">
+            <div class="nav-header">
+                <div class="couple-initials">L & N</div>
+                <div class="wedding-date">06.13.2026</div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="schedule.html">Schedule</a></li>
+                <li><a href="travel.html">Travel</a></li>
+                <li><a href="registry.html">Registry</a></li>
+                <li><a href="wedding-party.html">Wedding Party</a></li>
+                <li class="active"><a href="gallery.html">Gallery</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="rsvp.html" class="rsvp-button">RSVP</a></li>
+            </ul>
+            <div class="nav-footer">
+                <p>With love,</p>
+                <p class="couple-names">Lauren & Nicholas</p>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Gallery Section -->
+            <section class="gallery-section" id="gallery">
+                <div class="gallery-header">
+                    <h1>Photo Gallery</h1>
+                    <p>A collection of our favorite moments together. Click on any image to view it in full size.</p>
+                </div>
+                
+                <!-- Gallery Filters -->
+                <div class="gallery-filters">
+                    <button class="gallery-filter-button active" data-filter="all">All Photos</button>
+                    <button class="gallery-filter-button" data-filter="engagement">Engagement</button>
+                    <button class="gallery-filter-button" data-filter="proposal">Proposal</button>
+                    <button class="gallery-filter-button" data-filter="travel">Travel</button>
+                    <button class="gallery-filter-button" data-filter="moments">Special Moments</button>
+                </div>
+                
+                <!-- Gallery Container -->
+                <div class="gallery-container">
+                    <!-- Engagement Photos -->
+                    <div class="gallery-item" data-category="engagement">
+                        <img src="assets/images/gallery/gallery-1.svg" alt="Engagement Photo 1">
+                        <div class="gallery-caption">Engagement Session at Sunset Park</div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="engagement">
+                        <img src="assets/images/gallery/gallery-2.svg" alt="Engagement Photo 2">
+                        <div class="gallery-caption">Downtown Engagement Photoshoot</div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="engagement">
+                        <img src="assets/images/gallery/gallery-3.svg" alt="Engagement Photo 3">
+                        <div class="gallery-caption">Engagement Ring Close-up</div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="engagement">
+                        <img src="assets/images/gallery/gallery-4.svg" alt="Engagement Photo 4">
+                        <div class="gallery-caption">Engagement Picnic in the Park</div>
+                    </div>
+                    
+                    <!-- Proposal Photos -->
+                    <div class="gallery-item" data-category="proposal">
+                        <img src="assets/images/gallery/gallery-5.svg" alt="Proposal Photo 1">
+                        <div class="gallery-caption">The Moment He Proposed</div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="proposal">
+                        <img src="assets/images/gallery/gallery-6.svg" alt="Proposal Photo 2">
+                        <div class="gallery-caption">Surprise Proposal at the Beach</div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="proposal">
+                        <img src="assets/images/gallery/gallery-7.svg" alt="Proposal Photo 3">
+                        <div class="gallery-caption">Celebrating Right After She Said Yes</div>
+                    </div>
+                    
+                    <!-- Travel Photos -->
+                    <div class="gallery-item" data-category="travel">
+                        <img src="assets/images/gallery/gallery-8.svg" alt="Travel Photo 1">
+                        <div class="gallery-caption">Our Trip to Paris</div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="travel">
+                        <img src="assets/images/gallery/gallery-9.svg" alt="Travel Photo 2">
+                        <div class="gallery-caption">Hiking in Yosemite</div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="travel">
+                        <img src="assets/images/gallery/gallery-1.svg" alt="Travel Photo 3">
+                        <div class="gallery-caption">Beach Vacation in Hawaii</div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="travel">
+                        <img src="assets/images/gallery/gallery-2.svg" alt="Travel Photo 4">
+                        <div class="gallery-caption">Road Trip Along the Coast</div>
+                    </div>
+                    
+                    <!-- Special Moments Photos -->
+                    <div class="gallery-item" data-category="moments">
+                        <img src="assets/images/gallery/gallery-3.svg" alt="Special Moment 1">
+                        <div class="gallery-caption">Our First Date</div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="moments">
+                        <img src="assets/images/gallery/gallery-4.svg" alt="Special Moment 2">
+                        <div class="gallery-caption">Moving Into Our First Home</div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="moments">
+                        <img src="assets/images/gallery/gallery-5.svg" alt="Special Moment 3">
+                        <div class="gallery-caption">Celebrating 5 Years Together</div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="moments">
+                        <img src="assets/images/gallery/gallery-6.svg" alt="Special Moment 4">
+                        <div class="gallery-caption">Holiday Traditions</div>
+                    </div>
+                </div>
+                
+                <div class="gallery-note fade-in">
+                    <h3>Share Your Photos</h3>
+                    <p>We'd love to see your photos from our wedding day! Please use our wedding hashtag <strong>#LaurenAndNicholas2026</strong> when posting on social media, or upload them directly to our shared album after the wedding.</p>
+                    <a href="rsvp.html" class="button primary-button">RSVP Now</a>
+                </div>
+            </section>
+        </main>
+
+        <!-- Mobile Navigation Toggle -->
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle">
+            <span class="toggle-icon"></span>
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/main.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/gallery.js"></script>
+</body>
+</html>

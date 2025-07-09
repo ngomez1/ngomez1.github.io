@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Schedule</title>
+    <meta name="description" content="Schedule of events for Lauren and Nicholas's wedding celebration">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="./assets/images/favicon.svg" type="image/x-icon">
+    <style>
+        /* Schedule Page Specific Styles */
+        .schedule-section {
+            padding: var(--spacing-xl) 0;
+        }
+        
+        .schedule-header {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .schedule-header h1 {
+            font-family: var(--font-accent);
+            font-size: 4rem;
+            color: var(--secondary-pink);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .schedule-header p {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: var(--spacing-xl) 0;
+        }
+        
+        .timeline:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            background-color: var(--primary-pink);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .timeline-content {
+            position: relative;
+            width: calc(50% - 40px);
+            padding: var(--spacing-lg);
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-right: auto;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content:before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: -10px;
+            width: 20px;
+            height: 20px;
+            background-color: var(--white);
+            border-radius: 2px;
+            transform: rotate(45deg);
+            box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content:before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: -10px;
+            width: 20px;
+            height: 20px;
+            background-color: var(--white);
+            border-radius: 2px;
+            transform: rotate(45deg);
+            box-shadow: 2px -2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            width: 24px;
+            height: 24px;
+            background-color: var(--secondary-pink);
+            border: 4px solid var(--white);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .timeline-time {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--secondary-green);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .timeline-title {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-sm);
+            color: var(--secondary-pink);
+        }
+        
+        .timeline-location {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-style: italic;
+            color: var(--text-light);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .timeline-description {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .schedule-footer {
+            text-align: center;
+            margin-top: var(--spacing-xl);
+            padding: var(--spacing-lg);
+            background-color: var(--off-white);
+            border-radius: var(--border-radius);
+        }
+        
+        .schedule-footer h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--secondary-green);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .schedule-footer p {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            color: var(--text-dark);
+            max-width: 700px;
+            margin: 0 auto var(--spacing-md);
+        }
+        
+        /* Responsive Timeline */
+        @media (max-width: 767px) {
+            .timeline:before {
+                left: 30px;
+            }
+            
+            .timeline-content {
+                width: calc(100% - 80px);
+                margin-left: 80px !important;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-content:before,
+            .timeline-item:nth-child(even) .timeline-content:before {
+                left: -10px;
+                right: auto;
+                box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.05);
+            }
+            
+            .timeline-dot {
+                left: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="site-container">
+        <!-- Side Navigation -->
+        <nav class="side-nav">
+            <div class="nav-header">
+                <div class="couple-initials">L & N</div>
+                <div class="wedding-date">06.13.2026</div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li class="active"><a href="schedule.html">Schedule</a></li>
+                <li><a href="travel.html">Travel</a></li>
+                <li><a href="registry.html">Registry</a></li>
+                <li><a href="wedding-party.html">Wedding Party</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="rsvp.html" class="rsvp-button">RSVP</a></li>
+            </ul>
+            <div class="nav-footer">
+                <p>With love,</p>
+                <p class="couple-names">Lauren & Nicholas</p>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Schedule Section -->
+            <section class="schedule-section" id="schedule">
+                <div class="schedule-header">
+                    <h1>Wedding Schedule</h1>
+                    <p>We're excited to celebrate our special day with you. Here's what to expect during our wedding weekend.</p>
+                </div>
+                
+                <div class="timeline">
+                    <!-- Friday: Rehearsal Dinner -->
+                    <div class="timeline-item fade-in">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-time">Friday, June 12, 2026 • 6:00 PM</div>
+                            <h3 class="timeline-title">Rehearsal Dinner</h3>
+                            <div class="timeline-location">TBD Restaurant • 123 TBD Street, Chicago</div>
+                            <p class="timeline-description">Join us for a relaxed evening with close family and wedding party members as we prepare for the big day. Dinner and drinks will be provided.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Saturday: Getting Ready -->
+                    <div class="timeline-item fade-in">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-time">Saturday, June 13, 2026 • 12:00 PM</div>
+                            <h3 class="timeline-title">Wedding Party Preparation</h3>
+                            <div class="timeline-location">Greenhouse Loft Bridal Suite • 2545 W Diversey Ave, Chicago</div>
+                            <p class="timeline-description">The wedding party will gather to prepare for the ceremony. Hair and makeup services will be provided for the bridal party.</p>
+                        </div>
+                    </div>
+
+                    <!-- Saturday: Arrival -->
+                    <div class="timeline-item fade-in">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-time">Saturday, June 13, 2026 • 5:00 PM</div>
+                            <h3 class="timeline-title">Guest Arrival</h3>
+                            <div class="timeline-location">Greenhouse Loft • 2545 W Diversey Ave, Chicago</div>
+                            <p class="timeline-description">Please arrive between 5:00pm and 5:15pm to be seated prior to the ceremony.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Saturday: Ceremony -->
+                    <div class="timeline-item fade-in">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-time">Saturday, June 13, 2026 • 5:30 PM</div>
+                            <h3 class="timeline-title">Wedding Ceremony</h3>
+                            <div class="timeline-location">Greenhouse Loft • 2545 W Diversey Ave, Chicago</div>
+                            <p class="timeline-description">The ceremony will last approximately 30 minutes as we exchange vows in an indoor ceremony space.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Saturday: Cocktail Hour -->
+                    <div class="timeline-item fade-in">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-time">Saturday, June 13, 2026 • 6:00 PM</div>
+                            <h3 class="timeline-title">Cocktail Hour</h3>
+                            <div class="timeline-location">Greenhouse Loft • 2545 W Diversey Ave, Chicago</div>
+                            <p class="timeline-description">Enjoy drinks and hors d'oeuvres prepared by Lula Cafe while the wedding party takes photos. Space and bar service will be available both indoors and outdoors.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Saturday: Reception -->
+                    <div class="timeline-item fade-in">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-time">Saturday, June 13, 2026 • 7:00 PM</div>
+                            <h3 class="timeline-title">Reception Dinner & Dancing</h3>
+                            <div class="timeline-location">Greenhouse Loft • 2545 W Diversey Ave, Chicago</div>
+                            <p class="timeline-description">Please join us after the cocktail hour for delicious new American fare prepared and served by Lula Cafe, a cherished neighborhood institution and iconic farm-to-table staple of the Logan Square neighborhood. Lula Cafe is a 2024 James Beard Award Winner for outstanding hospitality and a 2020 Michelin Bib Gourmand winner. The restaurant has also been a finalist multiple times for the James Beard Award for Best Chef (Great Lakes). A night of celebration and dancing to follow dinner.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="schedule-footer">
+                    <h3>Additional Information</h3>
+                    <p>Dress code for the ceremony and reception is semi-formal attire. The ceremony and all events except Rehearsal Dinner will take place at Greenhouse Loft, which offers both indoor and outdoor spaces. In case of inclement weather, all activities will be moved indoors.</p>
+                    <a href="rsvp.html" class="button primary-button">RSVP Now</a>
+                </div>
+            </section>
+        </main>
+
+        <!-- Mobile Navigation Toggle -->
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle">
+            <span class="toggle-icon"></span>
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/main.js"></script>
+    <script src="js/navigation.js"></script>
+</body>
+</html>

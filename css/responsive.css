@@ -1,0 +1,228 @@
+/* 
+ * Wedding Website - Responsive Stylesheet
+ * Contains all media queries and responsive adjustments
+ */
+
+/* ===== Large Desktops (1200px and up) ===== */
+@media (min-width: 1200px) {
+    .main-content {
+        padding: var(--spacing-xl);
+    }
+    
+    .hero-content .couple-names {
+        font-size: 6rem;
+    }
+}
+
+/* ===== Desktops (992px to 1199px) ===== */
+@media (max-width: 1199px) {
+    .gallery-preview-grid {
+        gap: var(--spacing-md);
+    }
+}
+
+/* ===== Tablets (768px to 991px) ===== */
+@media (max-width: 991px) {
+    .side-nav {
+        width: 250px;
+    }
+    
+    .main-content {
+        margin-left: 250px;
+        padding: var(--spacing-md);
+    }
+    
+    .hero-content .couple-names {
+        font-size: 4rem;
+    }
+    
+    .date-number {
+        font-size: 2.5rem;
+    }
+    
+    .date-month,
+    .date-year {
+        font-size: 1.2rem;
+    }
+    
+    .countdown {
+        gap: var(--spacing-md);
+    }
+    
+    .countdown-number {
+        font-size: 2rem;
+    }
+    
+    .welcome-message {
+        padding: var(--spacing-lg);
+    }
+    
+    .welcome-message h2 {
+        font-size: 2.5rem;
+    }
+    
+    .gallery-preview-image {
+        height: 200px;
+    }
+}
+
+/* ===== Mobile Landscape (576px to 767px) ===== */
+@media (max-width: 767px) {
+    .side-nav {
+        transform: translateX(-100%);
+        width: 280px;
+    }
+    
+    .main-content {
+        margin-left: 0;
+        padding: var(--spacing-md);
+    }
+    
+    .mobile-nav-toggle {
+        display: block;
+    }
+    
+    .hero-content .couple-names {
+        font-size: 3.5rem;
+    }
+    
+    .hero-content:before,
+    .hero-content:after {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .welcome-message h2 {
+        font-size: 2.2rem;
+    }
+    
+    .welcome-message p {
+        font-size: 1rem;
+    }
+    
+    .gallery-preview-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .photo-gallery-preview h2:before,
+    .photo-gallery-preview h2:after {
+        display: none;
+    }
+    
+    .countdown {
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+    
+    .countdown-item {
+        width: 45%;
+        margin-bottom: var(--spacing-md);
+    }
+}
+
+/* ===== Mobile Portrait (up to 575px) ===== */
+@media (max-width: 575px) {
+    .hero-content .couple-names {
+        font-size: 3rem;
+    }
+    
+    .date-number {
+        font-size: 2rem;
+    }
+    
+    .date-month,
+    .date-year {
+        font-size: 1rem;
+    }
+    
+    .venue {
+        font-size: 1rem;
+    }
+    
+    .countdown-header {
+        font-size: 1rem;
+    }
+    
+    .welcome-message {
+        padding: var(--spacing-md);
+    }
+    
+    .welcome-message h2 {
+        font-size: 2rem;
+    }
+    
+    .gallery-preview-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+    
+    .gallery-preview-image {
+        height: 250px;
+    }
+    
+    .button {
+        display: block;
+        width: 100%;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .nav-links a {
+        font-size: 1.1rem;
+    }
+    
+    .couple-initials {
+        font-size: 2.5rem;
+    }
+    
+    .nav-footer .couple-names {
+        font-size: 1.5rem;
+    }
+}
+
+/* ===== Very Small Devices (up to 375px) ===== */
+@media (max-width: 375px) {
+    .hero-content .couple-names {
+        font-size: 2.5rem;
+    }
+    
+    .date-number {
+        font-size: 1.8rem;
+    }
+    
+    .countdown-number {
+        font-size: 1.8rem;
+    }
+    
+    .welcome-message h2 {
+        font-size: 1.8rem;
+    }
+    
+    .side-nav {
+        width: 250px;
+    }
+}
+
+/* ===== Print Styles ===== */
+@media print {
+    .side-nav,
+    .mobile-nav-toggle {
+        display: none;
+    }
+    
+    .main-content {
+        margin-left: 0;
+        padding: 0;
+    }
+    
+    .button {
+        border: 1px solid #000;
+        color: #000 !important;
+        background: none !important;
+    }
+    
+    .hero-content:before,
+    .hero-content:after,
+    .floral-divider {
+        display: none;
+    }
+}
