@@ -46,14 +46,39 @@ async function submitRSVPToSupabase(rsvpData) {
             notes: rsvpData.notes
         };
         
-        // Insert data into the rsvps table (not rsvp_submissions)
+        // Insert data into the rsvps table
         const { data, error } = await supabaseClient
             .from('rsvps')
-            .insert(dataForInsert);
+            .insert(dataForInsert)
+            .select(); // Add .select() to get the inserted record with its ID
         
         if (error) {
             console.error('Error submitting RSVP:', error);
             return false;
+        }
+        
+        // If there are additional guests, insert them into the guests table
+        if (rsvpData.guests && rsvpData.guests.length > 0 && data && data.length > 0) {
+            const rsvpId = data[0].id;
+            
+            // Prepare guest data for insertion
+            const guestsForInsert = rsvpData.guests.map(guest => ({
+                rsvp_id: rsvpId,
+                first_name: guest.first_name,
+                last_name: guest.last_name,
+                meal_preference: guest.meal_preference || 'None specified',
+                dietary_restrictions: guest.dietary_restrictions || 'None specified'
+            }));
+            
+            // Insert guests data
+            const { error: guestsError } = await supabaseClient
+                .from('guests')
+                .insert(guestsForInsert);
+            
+            if (guestsError) {
+                console.error('Error submitting guests:', guestsError);
+                // We don't return false here as the main RSVP was successful
+            }
         }
         
         console.log('RSVP submitted successfully:', data);

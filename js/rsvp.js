@@ -41,6 +41,7 @@ function initRSVPForm() {
             const rsvpData = {
                 name: `${getFormValue(formData, 'first_name')} ${getFormValue(formData, 'last_name')}`,
                 email: getFormValue(formData, 'email'),
+                phone: getFormValue(formData, 'phone', 'Not provided'),
                 attending: isAttending,
                 guest_count: isAttending ? parseInt(getFormValue(formData, 'guest_count', '0')) : 0,
                 meal_preference: isAttending ? getFormValue(formData, 'meal_preference', 'None specified') : 'Not attending',
@@ -48,6 +49,30 @@ function initRSVPForm() {
                 dietary_restrictions: getFormValue(formData, 'dietary_restrictions', 'None specified'),
                 notes: getFormValue(formData, 'notes', 'None specified')
             };
+
+            // Collect additional guests data if attending and guest count > 1
+            const guests = [];
+            if (isAttending && parseInt(getFormValue(formData, 'guest_count', '0')) > 1) {
+                // Start from guest 1 (index 1) since the primary guest is already included
+                for (let i = 1; i < parseInt(getFormValue(formData, 'guest_count', '0')); i++) {
+                    const guestFirstName = getFormValue(formData, `guest_${i}_first_name`, '');
+                    const guestLastName = getFormValue(formData, `guest_${i}_last_name`, '');
+                    
+                    // Only add if we have at least a first name
+                    if (guestFirstName) {
+                        guests.push({
+                            first_name: guestFirstName,
+                            last_name: guestLastName,
+                            meal_preference: getFormValue(formData, `guest_${i}_meal`, ''),
+                            dietary_restrictions: getFormValue(formData, `guest_${i}_dietary`, '')
+                        });
+                    }
+                }
+            }
+
+            // Add guests to rsvpData
+            rsvpData.guests = guests;
+
             
             // Submit to Supabase
             const success = await submitRSVPToSupabase(rsvpData);
