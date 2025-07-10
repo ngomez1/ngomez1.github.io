@@ -478,7 +478,7 @@ img {
 
 /* Floral Divider */
 .floral-divider {
-    height: 50px;
+    height: 200px;
     background-image: url('../assets/images/backgrounds/floral-divider.png');
     background-size: contain;
     background-position: center;
