@@ -13,38 +13,13 @@ let supabaseClient = null;
 
 /**
  * Initialize Supabase client
- * This function would normally use the Supabase JS client library
- * For now, we're creating a placeholder implementation
  */
 function initSupabase() {
-    // In a real implementation, this would be:
-    // supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    
-    // For now, we'll create a mock client with the necessary methods
-    supabaseClient = {
-        from: (table) => ({
-            insert: async (data) => {
-                console.log(`Inserting into ${table}:`, data);
-                // Simulate successful API call
-                return { 
-                    data: { ...data, id: generateUUID() }, 
-                    error: null 
-                };
-            },
-            select: async (columns) => {
-                console.log(`Selecting ${columns || '*'} from ${table}`);
-                // Simulate successful API call with mock data
-                return { 
-                    data: getMockData(table), 
-                    error: null 
-                };
-            }
-        })
-    };
-    
-    console.log('Supabase client initialized (mock implementation)');
+    supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    console.log('Supabase client initialized');
     return supabaseClient;
 }
+
 
 /**
  * Submit RSVP data to Supabase
@@ -53,21 +28,28 @@ function initSupabase() {
  */
 async function submitRSVPToSupabase(rsvpData) {
     try {
-        // Initialize Supabase client if not already initialized
         if (!supabaseClient) {
             initSupabase();
         }
         
-        // Add timestamp
-        const dataWithTimestamp = {
-            ...rsvpData,
-            created_at: new Date().toISOString()
+        // Transform data to match the schema
+        const dataForInsert = {
+            first_name: rsvpData.name.split(' ')[0],
+            last_name: rsvpData.name.split(' ').slice(1).join(' '),
+            email: rsvpData.email,
+            phone: rsvpData.phone || null,
+            attending: rsvpData.attending,
+            guest_count: rsvpData.guest_count,
+            meal_preference: rsvpData.meal_preference,
+            dietary_restrictions: rsvpData.dietary_restrictions,
+            song_requests: rsvpData.song_request,
+            notes: rsvpData.notes
         };
         
-        // Insert data into the rsvp_submissions table
+        // Insert data into the rsvps table (not rsvp_submissions)
         const { data, error } = await supabaseClient
-            .from('rsvp_submissions')
-            .insert(dataWithTimestamp);
+            .from('rsvps')
+            .insert(dataForInsert);
         
         if (error) {
             console.error('Error submitting RSVP:', error);
