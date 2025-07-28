@@ -71,7 +71,7 @@
             gap: var(--spacing-md);
             margin-bottom: var(--spacing-xl);
         }
-        
+
         .gallery-item {
             position: relative;
             border-radius: var(--border-radius);
@@ -79,6 +79,10 @@
             box-shadow: var(--box-shadow);
             cursor: pointer;
             height: 300px;
+        }
+
+        .gallery-item.hidden {
+            display: none;
         }
         
         .gallery-item img {
