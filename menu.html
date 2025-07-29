@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Menu</title>
+    <meta name="description" content="Wedding menu for Lauren and Nicholas's special day">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="./assets/images/favicon.svg" type="image/x-icon">
+    <style>
+        /* Menu Page Specific Styles */
+        .menu-section {
+            padding: var(--spacing-xl) 0;
+        }
+        
+        .menu-header {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .menu-header h1 {
+            font-family: var(--font-accent);
+            font-size: 4rem;
+            color: var(--secondary-pink);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .menu-header p {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .menu-container {
+            max-width: 900px;
+            margin: 0 auto var(--spacing-xxl);
+        }
+
+        .menu-course {
+            margin-bottom: var(--spacing-xl);
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .menu-course:before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid var(--secondary-pink);
+            border-radius: var(--border-radius);
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        .menu-course-title {
+            background-color: var(--primary-green);
+            color: var(--white);
+            padding: var(--spacing-md) var(--spacing-lg);
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .menu-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .menu-table th {
+            background-color: var(--off-white);
+            color: var(--primary-green);
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-align: left;
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .menu-table td {
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-bottom: 1px solid var(--light-gray);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            color: var(--text-dark);
+            vertical-align: top;
+        }
+
+        .menu-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .menu-item-name {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: var(--secondary-green);
+            font-weight: 500;
+        }
+
+        .dietary-info {
+            display: inline-block;
+            margin-left: var(--spacing-sm);
+            font-size: 0.8rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background-color: var(--light-gray);
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .dietary-info.vegetarian {
+            background-color: var(--primary-green);
+            color: white;
+        }
+
+        .dietary-info.vegan {
+            background-color: var(--secondary-green);
+            color: white;
+        }
+
+        .dietary-info.gluten-free {
+            background-color: var(--secondary-pink);
+            color: white;
+        }
+
+        .dietary-info.dairy-free {
+            background-color: #03A9F4;
+            color: white;
+        }
+
+        .dietary-info.contains-nuts {
+            background-color: gold;
+            color: white;
+        }
+
+        .menu-note {
+            text-align: center;
+            margin-top: var(--spacing-xl);
+            padding: var(--spacing-xl);
+            background-color: var(--primary-green);
+            border-radius: var(--border-radius);
+            color: var(--white);
+        }
+        
+        .menu-note h3 {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .menu-note p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto var(--spacing-lg);
+        }
+
+        @media (max-width: 767px) {
+            .menu-table, .menu-table tbody, .menu-table tr, .menu-table td {
+                display: block;
+                width: 100%;
+            }
+
+            .menu-table th {
+                display: none;
+            }
+
+            .menu-table td {
+                padding: var(--spacing-sm) var(--spacing-md);
+                position: relative;
+                padding-left: 50%;
+                text-align: left;
+                min-height: 30px;
+            }
+
+            .menu-table td:before {
+                position: absolute;
+                left: var(--spacing-md);
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                font-weight: 600;
+                content: attr(data-label);
+            }
+
+            .menu-item-name {
+                margin-bottom: var(--spacing-xs);
+                display: block;
+            }
+
+            .dietary-info {
+                margin-left: 0;
+                margin-right: var(--spacing-xs);
+                margin-bottom: var(--spacing-xs);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="site-container">
+        <!-- Side Navigation -->
+        <nav class="side-nav">
+            <div class="nav-header">
+                <div class="couple-initials">L & N</div>
+                <div class="wedding-date">06.13.2026</div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="schedule.html">Schedule</a></li>
+                <li class="active"><a href="menu.html">Menu</a></li>
+                <li><a href="travel.html">Travel</a></li>
+                <li><a href="registry.html">Registry</a></li>
+                <li><a href="wedding-party.html">Wedding Party</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="rsvp.html" class="rsvp-button">RSVP</a></li>
+            </ul>
+            <div class="nav-footer">
+                <p>With love,</p>
+                <p class="couple-names">Lauren & Nicholas</p>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Menu Section -->
+            <section class="menu-section" id="menu">
+                <div class="menu-header">
+                    <h1>Wedding Menu</h1>
+                    <p>We're excited to present a handpicked menu of delicious new American fare prepared and served by Lula Cafe, a cherished neighborhood institution and iconic farm-to-table staple of the Logan Square neighborhood. Lula Cafe is a 2024 James Beard Award Winner for outstanding hospitality and a 2020 Michelin Bib Gourmand winner. The restaurant has also been a finalist multiple times for the James Beard Award for Best Chef (Great Lakes). Please see the table below for the complete food menu.<br><br>Lula Cafe will also be providing all libations throughout the evening at our open bars, including red, white, and sparkling wine, craft beers, signature and classic cocktails, sodas, sparkling waters, and coffee.</p>
+                </div>
+                
+                <div class="menu-container">
+                    <!-- Hors d'oeuvres -->
+                    <div class="menu-course fade-in">
+                        <div class="menu-course-title">Hors d'oeuvres</div>
+                        <table class="menu-table">
+                            <thead>
+                                <tr>
+                                    <th width="30%">Dish</th>
+                                    <th width="20%">Dietary Info</th>
+                                    <th width="25%">Toppings/Sides</th>
+                                    <th width="25%">Notes from the Tasting</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td data-label="Item">
+                                        <span class="menu-item-name">Ricotta-Stuffed Dates</span>
+                                    </td>
+                                    <td data-label="Dietary Info">
+                                        <span class="dietary-info vegetarian">Vegetarian</span>
+                                        <span class="dietary-info gluten-free">Gluten-Free</span>
+                                    </td>
+                                    <td data-label="Ingredients">Pumpkin seed pesto, smoked honey</td>
+                                    <td data-label="Tasting Notes">Lauren's favorite - perfectly sweet, light, creamy, and refreshing</td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Item">
+                                        <span class="menu-item-name">Potato & Kale Croquette</span>
+                                    </td>
+                                    <td data-label="Dietary Info">
+                                        <span class="dietary-info vegetarian">Vegetarian</span>
+                                        <span class="dietary-info gluten-free">Gluten-Free</span>
+                                    </td>
+                                    <td data-label="Ingredients">Horseradish aioli</td>
+                                    <td data-label="Tasting Notes">Crunchy, savory, and filling - a nice, easy bite to mix things up</td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Item">
+                                        <span class="menu-item-name">Burrata & Cherry Tomato Crostini</span>
+                                    </td>
+                                    <td data-label="Dietary Info">
+                                        <span class="dietary-info vegetarian">Vegetarian</span>
+                                    </td>
+                                    <td data-label="Ingredients">Sunflower seed pesto</td>
+                                    <td data-label="Tasting Notes">Nicholas' favorite - the perfect blend of fresh, sweet, crunchy, and salty</td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Item">
+                                        <span class="menu-item-name">Beef Meatballs</span>
+                                    </td>
+                                    <td data-label="Dietary Info">
+                                        <span class="dietary-info gluten-free">Gluten-Free</span>
+                                    </td>
+                                    <td data-label="Ingredients">Tomato jam, shaved pecorino</td>
+                                    <td data-label="Tasting Notes">An absolute crowd pleaser - hearty, flavorful, and comforting</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Salad -->
+                    <div class="menu-course fade-in">
+                        <div class="menu-course-title">Salad</div>
+                        <table class="menu-table">
+                            <thead>
+                                <tr>
+                                    <th width="30%">Dish</th>
+                                    <th width="20%">Dietary Info</th>
+                                    <th width="25%">Toppings/Sides</th>
+                                    <th width="25%">Notes from the Tasting</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td data-label="Item">
+                                        <span class="menu-item-name">Baby Kale Salad</span>
+                                    </td>
+                                    <td data-label="Dietary Info">
+                                        <span class="dietary-info vegetarian">Vegetarian</span>
+                                        <span class="dietary-info gluten-free">Gluten-Free</span>
+                                    </td>
+                                    <td data-label="Ingredients">Pears, grilled dates, aged goat cheese, mandarin vinaigrette</td>
+                                    <td data-label="Tasting Notes">Light, sharp palate cleanser with bitter and fruity notes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Entree -->
+                    <div class="menu-course fade-in">
+                        <div class="menu-course-title">Entrée</div>
+                        <table class="menu-table">
+                            <thead>
+                                <tr>
+                                    <th width="30%">Dish</th>
+                                    <th width="20%">Dietary Info</th>
+                                    <th width="25%">Toppings/Sides</th>
+                                    <th width="25%">Notes from the Tasting</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td data-label="Item">
+                                        <span class="menu-item-name">Chickpea and Fennel Tagine</span>
+                                    </td>
+                                    <td data-label="Dietary Info">
+                                        <span class="dietary-info vegetarian">Vegetarian</span>
+                                        <span class="dietary-info vegan">Vegan</span>
+                                        <span class="dietary-info gluten-free">Gluten-Free</span>
+                                    </td>
+                                    <td data-label="Ingredients">Green harissa, golden raisin, preserved lemon, arugula, white rice</td>
+                                    <td data-label="Tasting Notes">Lauren's favorite - hearty, warm, vegetarian (and vegan too!) dish served curry-style over rice</td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Item">
+                                        <span class="menu-item-name">Grilled Chicken</span>
+                                    </td>
+                                    <td data-label="Dietary Info">
+                                        <span class="dietary-info gluten-free">Gluten-Free</span>
+                                    </td>
+                                    <td data-label="Ingredients">Walnut pesto, baby carrot, japanese sweet potato, apple vinaigrette</td>
+                                    <td data-label="Tasting Notes">Nicholas' favorite - absolutely divine, juicy white chicken served on a bed of delectable, creamy vegetables</td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Item">
+                                        <span class="menu-item-name">Ricotta Gnocchi</span>
+                                    </td>
+                                    <td data-label="Dietary Info">
+                                        <span class="dietary-info vegetarian">Vegetarian</span>
+                                    </td>
+                                    <td data-label="Ingredients">Rapini, green garlic, green cabbage, chamomile butter</td>
+                                    <td data-label="Tasting Notes">Rich, cheesy, and fresh - the potato-based pasta born to be a crowd pleaser</td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Item">
+                                        <span class="menu-item-name">Cider-braised Pork Shoulder</span>
+                                    </td>
+                                    <td data-label="Dietary Info">
+                                        <span class="dietary-info gluten-free">Gluten-Free</span>
+                                        <span class="dietary-info dairy-free">Dairy-Free</span>
+                                    </td>
+                                    <td data-label="Ingredients">White beans, chile honey, rapini, pecan</td>
+                                    <td data-label="Tasting Notes">Savory, meat-forward meal cooked to perfection</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Dessert -->
+                    <div class="menu-course fade-in">
+                        <div class="menu-course-title">Dessert</div>
+                        <table class="menu-table">
+                            <thead>
+                                <tr>
+                                    <th width="30%">Dish</th>
+                                    <th width="20%">Dietary Info</th>
+                                    <th width="25%">Toppings/Sides</th>
+                                    <th width="25%">Notes from the Tasting</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td data-label="Item">
+                                        <span class="menu-item-name">Wedding Cake</span>
+                                    </td>
+                                    <td data-label="Dietary Info">
+                                        <span class="dietary-info vegetarian">Vegetarian</span>
+                                    </td>
+                                    <td data-label="Ingredients">Coming soon...</td>
+                                    <td data-label="Tasting Notes">Coming soon...</td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Item">
+                                        <span class="menu-item-name">Late Night Treat</span>
+                                    </td>
+                                    <td data-label="Dietary Info">
+                                        <span class="dietary-info vegetarian">Vegetarian</span>
+                                    </td>
+                                    <td data-label="Ingredients">Coming soon...</td>
+                                    <td data-label="Tasting Notes">Coming soon...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Late Night Snack -->
+                    <div class="menu-course fade-in">
+                        <div class="menu-course-title">Late Night Snack</div>
+                        <table class="menu-table">
+                            <thead>
+                                <tr>
+                                    <th width="30%">Dish</th>
+                                    <th width="20%">Dietary Info</th>
+                                    <th width="25%">Topping/Sides</th>
+                                    <th width="25%">Notes from the Tasting</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td data-label="Item">
+                                        <span class="menu-item-name">Taleggio Grilled Cheese</span>
+                                    </td>
+                                    <td data-label="Dietary Info">
+                                        <span class="dietary-info vegetarian">Vegetarian</span>
+                                    </td>
+                                    <td data-label="Ingredients">Tomato jam</td>
+                                    <td data-label="Tasting Notes">Grilled Cheese!? Need we say more?</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="menu-note fade-in" style="background-color: var(--secondary-pink);">
+                    <h3>Dietary Accommodations</h3>
+                    <p>We've worked with our caterer to ensure a variety of options for different dietary needs. If you have specific dietary restrictions not addressed by our menu selections, please let us know in your RSVP so we can make appropriate arrangements.</p>
+                    <a href="rsvp.html" class="button primary-button">RSVP Now</a>
+                </div>
+            </section>
+        </main>
+
+        <!-- Mobile Navigation Toggle -->
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle">
+            <span class="toggle-icon"></span>
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/main.js"></script>
+    <script src="js/navigation.js"></script>
+</body>
+</html>
